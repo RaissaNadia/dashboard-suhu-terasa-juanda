@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Dashboard Suhu Terasa Juanda</title>
+<style>
+:root {
+  --bg:#eef3f6;
+  --card:#fff;
+  --ink:#12202b;
+  --mut:#5b6b78;
+  --line:#d3dde4;
+  --band:#1f6f8b;
+  --hot:#c8102e;
+  --c0:#7f7f7f;
+  --c1:#0072b2;
+  --c2:#d55e00;
+  --c3:#9aa5ad;
+  --c4:#009e73;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+html {
+  scroll-padding-top: env(safe-area-inset-top, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme=light]) {
+    --bg:#0f1a22;
+    --card:#16252f;
+    --ink:#e6eef3;
+    --mut:#9fb1bd;
+    --line:#2b3e4b;
+    --band:#5db6d4;
+    --hot:#ff5a6e;
+    --c0:#a0a0a0;
+    --c1:#56b4e9;
+    --c2:#f0a060;
+    --c3:#b8b8b8;
+    --c4:#2fd3a8;
+  }
+}
+:root[data-theme=dark] {
+  --bg:#0f1a22;
+  --card:#16252f;
+  --ink:#e6eef3;
+  --mut:#9fb1bd;
+  --line:#2b3e4b;
+  --band:#5db6d4;
+  --hot:#ff5a6e;
+  --c0:#a0a0a0;
+  --c1:#56b4e9;
+  --c2:#f0a060;
+  --c3:#b8b8b8;
+  --c4:#2fd3a8;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font:
+    15px/1.5 system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+}
+main {
+  max-width: 1020px;
+  margin: 0 auto;
+  padding: 18px 14px 40px;
+}
+h1 {
+  font-size: 22px;
+  margin: 0 0 4px;
+}
+h3 {
+  font-size: 15px;
+  margin: 0 0 6px;
+}
+.panel {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 12px;
+}
+.g2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  gap: 12px;
+}
+.g2 .panel {
+  margin: 0;
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: end;
+}
+label {
+  display: block;
+  font-size: 13px;
+  color: var(--mut);
+}
+input,
+select,
+button {
+  font: inherit;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 6px 10px;
+}
+button {
+  cursor: pointer;
+}
+:focus-visible {
+  outline: 2px solid var(--band);
+  outline-offset: 2px;
+}
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0 0 12px;
+}
+.tabs button[aria-selected=true] {
+  background: var(--band);
+  color: #fff;
+  border-color: var(--band);
+}
+.note {
+  font-size: 13px;
+  color: var(--mut);
+  margin: 6px 0 0;
+}
+.hide {
+  display: none;
+}
+svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.leg {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--mut);
+}
+.leg i {
+  display: inline-block;
+  width: 14px;
+  height: 10px;
+  margin-right: 5px;
+  border-radius: 2px;
+}
+.qa b {
+  display: block;
+}
+.qa p {
+  margin: 4px 0 0;
+}
+.pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.big {
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.big small {
+  color: var(--mut);
+  display: block;
+}
+.big .v {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+.stats div {
+  border-top: 2px solid var(--line);
+  padding-top: 6px;
+}
+.stats small {
+  color: var(--mut);
+  display: block;
+}
+.stats span {
+  font-size: 17px;
+  font-weight: 600;
+}
+#badge.hot {
+  background: var(--hot);
+  color: #fff;
+  padding: 2px 10px;
+  border-radius: 99px;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 13px;
+}
+td,
+th {
+  border-bottom: 1px solid var(--line);
+  padding: 5px 8px;
+  text-align: right;
+  white-space: nowrap;
+}
+td:first-child,
+th:first-child {
+  text-align: left;
+}
+.hm td {
+  text-align: center;
+  min-width: 54px;
+}
+@media (max-width: 560px) {
+  .pair {
+    grid-template-columns: 1fr;
+  }
+}
+body {
+  background:
+    radial-gradient(
+      900px 320px at 50% -80px,
+      color-mix(in srgb, var(--band) 25%, transparent),
+      transparent),
+    var(--bg);
+}
+main {
+  max-width: 1080px;
+  padding: 16px 14px 48px;
+}
+.hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 22px 26px;
+  border-radius: 18px;
+  margin-bottom: 14px;
+  color: #fff;
+  background:
+    linear-gradient(
+      120deg,
+      #0d3447 0%,
+      #1f6f8b 60%,
+      #d9622b 135%);
+  box-shadow: 0 14px 30px -16px rgba(13, 52, 71, .7);
+}
+.hero h1 {
+  font-size: 26px;
+  margin: 0;
+  letter-spacing: -.01em;
+}
+.hero p {
+  margin: 5px 0 0;
+  opacity: .92;
+  font-size: 14px;
+  max-width: 60ch;
+}
+.stat {
+  background: rgba(255, 255, 255, .18);
+  border: 1px solid rgba(255, 255, 255, .35);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 99px;
+}
+.btn {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  cursor: pointer;
+  background: #fff;
+  color: #0d3447;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px 18px;
+  border-radius: 99px;
+  border: 0;
+  transition: background .15s;
+}
+.btn:hover {
+  background: #ffe6d6;
+}
+.btn:focus-within {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+.btn input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+}
+.welcome {
+  text-align: center;
+  padding: 40px 20px 34px;
+}
+.welcome .em {
+  font-size: 56px;
+  line-height: 1;
+}
+.welcome h2 {
+  margin: 12px 0 6px;
+  font-size: 20px;
+}
+.welcome p {
+  margin: 0 auto;
+  max-width: 52ch;
+  color: var(--mut);
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+}
+.chip {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  padding: 7px 15px;
+  font-size: 13px;
+}
+.panel {
+  border-radius: 14px;
+  box-shadow: 0 1px 2px rgba(18, 32, 43, .05), 0 10px 26px -18px rgba(18, 32, 43, .35);
+}
+.g2 {
+  gap: 14px;
+}
+.g2 .panel,
+.panel h3 {
+  font-size: 15px;
+}
+.tabs {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 6px;
+  gap: 4px;
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 5;
+  box-shadow: 0 8px 20px -16px rgba(0, 0, 0, .4);
+}
+.tabs button {
+  white-space: nowrap;
+  border: 0;
+  background: transparent;
+  color: var(--mut);
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 8px 14px;
+}
+.tabs button:hover {
+  background: var(--bg);
+}
+.tabs button[aria-selected=true] {
+  background: var(--band);
+  color: #fff;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme=light]) .tabs button[aria-selected=true] {
+    color: #06222e;
+  }
+}
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.kpi {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.kpi .ic {
+  font-size: 30px;
+}
+.kpi small {
+  display: block;
+  color: var(--mut);
+  font-size: 12px;
+}
+.kpi b {
+  font-size: 20px;
+}
+.qgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  gap: 12px;
+}
+.panel.qa {
+  display: flex;
+  gap: 12px;
+  margin: 0;
+}
+.qa .ic {
+  font-size: 26px;
+  line-height: 1.25;
+}
+.qa b {
+  font-size: 15px;
+}
+.qa p {
+  color: var(--mut);
+}
+#scrow {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 10px 14px;
+}
+.foot {
+  text-align: center;
+  color: var(--mut);
+  font-size: 12px;
+  margin-top: 22px;
+}
+</style></head><body><main>
+<header class="hero"><div><h1>🌡️ Dashboard Suhu Terasa 13.00</h1><p>📍 Stasiun Juanda &middot; 🔥 Prediksi suhu terasa &amp; peringatan hari panas</p></div>
+<span class="stat" id="status">⏳ Memuat data…</span></header>
+<section class="panel welcome hide" id="welcome"><div class="em">📂❓</div><h2>Data belum ditemukan</h2><p>Pastikan berkas <b>data_dashboard.js</b> berada di folder yang sama dengan file HTML ini, lalu buka ulang halamannya. 🔄</p></section>
+<p id="pesan" class="hide"></p>
+<div id="app" class="hide">
+<div class="tabs" role="tablist" id="tabs"></div>
+<div class="row hide" id="scrow" style="margin-bottom:12px"><div><label for="sc">🗂️ Skema evaluasi</label><select id="sc"><option value="G">Gabungan A+B+C</option><option value="A">A (uji 2024)</option><option value="B">B (uji 2025)</option><option value="C">C (uji Jan-Sep 2026)</option></select></div></div>
+<div id="t-ring"></div>
+<div id="t-hari" class="hide">
+<section class="panel"><div class="row"><div><label for="tgl">📅 Tanggal</label><input type="date" id="tgl"></div><button id="prev">&larr;</button><button id="next">&rarr;</button>
+<div><label for="mdl">🤖 Model</label><select id="mdl"></select></div><div><label for="win">🔭 Jendela</label><select id="win"><option value="15">31 hari</option><option value="30" selected>61 hari</option><option value="90">181 hari</option></select></div></div><p class="note" id="rentang"></p></section>
+<section class="panel"><div class="pair"><div class="big"><small>🌡️ Suhu terasa asli</small><span class="v" id="vA" style="color:var(--hot)">-</span></div><div class="big"><small>🔮 Prediksi (median)</small><span class="v" id="vP" style="color:var(--band)">-</span></div></div>
+<div class="stats"><div><small>☀️ Suhu udara 13.00</small><span id="sAir">-</span></div><div><small>↔️ Selisih asli - prediksi</small><span id="sErr">-</span></div><div><small>📐 Rentang 80%</small><span id="s80">-</span></div><div><small>📐 Rentang 90%</small><span id="s90">-</span></div><div><small>🔥 Peluang hari panas</small><span id="sProb">-</span></div><div><small>🚨 Kejadian</small><span id="badge">-</span></div></div></section>
+<section class="panel"><svg id="grafik" viewBox="0 0 900 360"></svg><p class="note">Pita = interval 5-95% dan 25-75%, garis = median, titik merah = hari panas, putus-putus = ambang 39,44 &deg;C. Klik grafik untuk pindah tanggal.</p></section></div>
+<div id="t-model" class="hide g2"></div><div id="t-kal" class="hide"></div><div id="t-pola" class="hide"></div><div id="t-uji" class="hide"></div><div id="t-adv" class="hide"></div>
+<p class="foot">COPY RIGHT BY NADIA RAISSA &amp; EVELYNA KAMILA 2026</p></div>
+<script src="data_dashboard.js"></script>
+<script>
+// ===== Konstanta dan penyimpanan data =====
+const QC = ["q05", "q10", "q25", "q50", "q60", "q70", "q75", "q80", "q85", "q90", "q95"], QL = [0.05, 0.1, 0.25, 0.5, 0.6, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95], QI = [0, 1, 2, 3, 6, 9, 10], THR = 71 * 5 / 9, EPS = 5e-3;
+const MS = ["Klimatologi", "Linear", "QRF"], CL = { Klimatologi: "--c0", Linear: "--c1", QRF: "--c2" }, BL = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
+const S = { A: {}, B: {}, C: {} }, DM = {}, AIR = {};
+let T4 = [], cur = null, tl = [];
+const $ = (i) => document.getElementById(i), f1 = (v, d = 1) => v == null || isNaN(v) ? "-" : v.toFixed(d).replace(".", ",");
+
+// ===== Membaca dan memuat data CSV =====
+function parseCSV(t) {
+  t = t.replace(/^\uFEFF/, "").trim().split(/\r?\n/);
+  const h = t[0].split(",").map((s) => s.replace(/^"|"$/g, "").trim());
+  return t.slice(1).map((l) => {
+    const c = l.split(","), o = {};
+    h.forEach((k, i) => o[k] = (c[i] || "").replace(/^"|"$/g, "").trim());
+    return o;
+  });
+}
+
+function peluang(k) {
+  const n = k.length, lv = [0, ...QL, 1], xp = [k[0] - (k[1] - k[0]), ...k, k[n - 1] + (k[n - 1] - k[n - 2])].map((v, i) => v + 1e-9 * i);
+  let p;
+  if (THR <= xp[0]) p = 0;
+  else if (THR >= xp[n + 1]) p = 1;
+  else for (let i = 1; i < xp.length; i++) if (THR <= xp[i]) {
+    p = lv[i - 1] + (THR - xp[i - 1]) / (xp[i] - xp[i - 1]) * (lv[i] - lv[i - 1]);
+    break;
+  }
+  return Math.min(1 - EPS, Math.max(EPS, 1 - p));
+}
+
+async function muat(L) {
+  const pes = [];
+  for (const it of L) {
+    const nm = it.nm, rows = parseCSV(it.tx);
+    if (!rows.length) continue;
+    const r0 = rows[0];
+    if ("Bagian Data" in r0 && "Suhu Terasa 13.00" in r0) {
+      T4 = rows.map((r) => ({ t: r.Tanggal.slice(0, 10), hot: +r["Hari Panas (Danger)"], hi: +r["Suhu Terasa 13.00"], rh: +r["Lembab Nisbi 13.00"] }));
+      rows.forEach((r) => {
+        const v = parseFloat(r["T°C 13.00"]);
+        if (!isNaN(v)) AIR[r.Tanggal.slice(0, 10)] = v;
+      });
+      pes.push(nm + ": data iklim (" + rows.length + " hari)");
+      continue;
+    }
+    if (loadX(nm, rows, r0)) {
+      pes.push(nm + ": dibaca (" + rows.length + " baris)");
+      continue;
+    }
+    const m = /klimatologi/i.test(nm) ? "Klimatologi" : /qrf/i.test(nm) ? "QRF" : /linear/i.test(nm) ? "Linear" : null, sc = /lipatanA/i.test(nm) ? "A" : /lipatanB|validasi/i.test(nm) ? "B" : /uji/i.test(nm) ? "C" : null;
+    if (!m || !sc || !("q50" in r0)) {
+      pes.push(nm + ": dilewati");
+      continue;
+    }
+    const R = rows.map((r) => {
+      const q = QC.map((c) => +r[c]);
+      return { t: r.Tanggal.slice(0, 10), y: +r["Suhu Terasa 13.00 (asli)"], hot: +r["Hari Panas (Danger)"], q, p: peluang(q) };
+    }).filter((r) => !r.q.some(isNaN));
+    S[sc][m] = R;
+    fillP(sc, m, R);
+    DM[m] = DM[m] || {};
+    R.forEach((r) => DM[m][r.t] = r);
+    pes.push(nm + ": " + m + " skema " + sc + " (" + R.length + " hari)");
+  }
+  $("pesan").innerHTML = pes.join("<br>");
+  if (Object.keys(DM).length) {
+    $("app").classList.remove("hide");
+    $("welcome").classList.add("hide");
+    $("status").textContent = "✅ Data dimuat otomatis";
+    render();
+  }
+}
+;
+
+// ===== Metrik evaluasi (pinball, MAE, Brier, AUC, matriks keputusan) =====
+const getR = (s, m) => s === "G" ? ["A", "B", "C"].flatMap((k) => S[k][m] || []) : S[s][m] || [], ML = () => MS.filter((m) => getR("G", m).length);
+
+function auc(R) {
+  const a = R.map((r) => [r.p, r.hot]).sort((x, y) => x[0] - y[0]), n = a.length;
+  let np = 0, rs = 0, i = 0;
+  while (i < n) {
+    let j = i;
+    while (j < n && a[j][0] === a[i][0]) j++;
+    const rk = (i + j + 1) / 2;
+    for (let k = i; k < j; k++) if (a[k][1]) {
+      rs += rk;
+      np++;
+    }
+    i = j;
+  }
+  const nn = n - np;
+  return np && nn ? (rs - np * (np + 1) / 2) / (np * nn) : NaN;
+}
+
+function met(R) {
+  const n = R.length;
+  let pin = 0, ae = 0, se = 0, c8 = 0, c9 = 0, w = 0, br = 0, sp = 0, so = 0;
+  R.forEach((r) => {
+    const e0 = r.y - r.q[3];
+    ae += Math.abs(e0);
+    se += e0 * e0;
+    QI.forEach((i) => {
+      const e = r.y - r.q[i], q = QL[i];
+      pin += Math.max(q * e, (q - 1) * e) / 7;
+    });
+    c8 += r.y >= r.q[1] && r.y <= r.q[9];
+    c9 += r.y >= r.q[0] && r.y <= r.q[10];
+    w += r.q[9] - r.q[1];
+    br += (r.p - r.hot) ** 2;
+    sp += r.p;
+    so += r.hot;
+  });
+  return { pin: pin / n, mae: ae / n, rmse: Math.sqrt(se / n), c80: c8 / n * 100, c90: c9 / n * 100, w80: w / n, br: br / n, mp: sp / n, or: so / n, auc: auc(R) };
+}
+
+function cm(R, t) {
+  let tp = 0, fp = 0, fn = 0, tn = 0;
+  R.forEach((r) => {
+    const y = r.p >= t;
+    r.hot ? y ? tp++ : fn++ : y ? fp++ : tn++;
+  });
+  const pre = tp / (tp + fp || 1), rec = tp / (tp + fn || 1);
+  return { tp, fp, fn, tn, pre, rec, far: fp / (fp + tn || 1), f1: 2 * pre * rec / (pre + rec || 1) };
+}
+
+function rel(R) {
+  const a = [...R].sort((x, y) => x.p - y.p), n = a.length, o = { x: [], y: [] };
+  for (let b = 0; b < 5; b++) {
+    const c = a.slice(Math.floor(b * n / 5), Math.floor((b + 1) * n / 5));
+    if (!c.length) continue;
+    o.x.push(c.reduce((s, r) => s + r.p, 0) / c.length);
+    o.y.push(c.reduce((s, r) => s + r.hot, 0) / c.length);
+  }
+  return o;
+}
+
+// ===== Pembuat grafik SVG (batang dan garis) =====
+const T = (x, y, t, a = "middle") => `<text x="${x}" y="${y}" text-anchor="${a}" font-size="10" style="fill:var(--mut)">${t}</text>`, lg = (id, ser) => $(id + "l").innerHTML = ser.length > 1 ? ser.map((q) => `<span><i style="background:var(${q.c})"></i>${q.n}</span>`).join("") : "";
+
+function bar(id, cats, ser, o = {}) {
+  const W = 460, H = 260, L = 42, B = 26, T0 = 12, R = 8, rf = o.ref || [], d = o.d ?? 2;
+  const hi = Math.max(...ser.flatMap((s2) => s2.v.filter((x) => x == x)), ...rf.filter((x) => x != null), 1e-6) * 1.15, Y = (v) => T0 + (1 - v / hi) * (H - T0 - B), gw = (W - L - R) / cats.length, bw = gw * 0.8 / ser.length;
+  let s = "";
+  for (let k = 0; k <= 4; k++) {
+    const v = hi * k / 4;
+    s += `<line x1="${L}" x2="${W - R}" y1="${Y(v)}" y2="${Y(v)}" style="stroke:var(--line)"/>` + T(L - 5, Y(v) + 3, f1(v, d), "end");
+  }
+  cats.forEach((c, i) => {
+    const x0 = L + i * gw + gw * 0.1;
+    s += T(L + i * gw + gw / 2, H - 9, c);
+    ser.forEach((q, j) => {
+      const v = q.v[i];
+      if (v != v) return;
+      s += `<rect x="${x0 + j * bw}" y="${Y(v)}" width="${bw - 1}" height="${H - B - Y(v)}" style="fill:var(${q.c})"/><text x="${x0 + j * bw + bw / 2}" y="${Y(v) - 3}" text-anchor="middle" font-size="9" style="fill:var(--ink)">${o.nl ? "" : f1(v, d)}</text>`;
+    });
+    if (rf[i] != null) s += `<line x1="${L + i * gw}" x2="${L + (i + 1) * gw}" y1="${Y(rf[i])}" y2="${Y(rf[i])}" stroke-dasharray="4 3" stroke-width="2" style="stroke:var(--hot)"/>`;
+  });
+  $(id).innerHTML = s;
+  lg(id, ser);
+}
+
+function line(id, ser, o = {}) {
+  const W = 460, H = 260, L = 42, B = 32, T0 = 12, R = 12, xs = ser.flatMap((s2) => s2.x), ys = ser.flatMap((s2) => s2.y), x0 = o.x ? o.x[0] : Math.min(...xs), x1 = o.x ? o.x[1] : Math.max(...xs), y0 = o.y ? o.y[0] : 0, y1 = o.y ? o.y[1] : Math.max(...ys) * 1.1;
+  const X = (v) => L + (v - x0) / (x1 - x0 || 1) * (W - L - R), Y = (v) => T0 + (1 - (v - y0) / (y1 - y0 || 1)) * (H - T0 - B);
+  let s = "";
+  for (let k = 0; k <= 4; k++) {
+    const a = y0 + (y1 - y0) * k / 4, b = x0 + (x1 - x0) * k / 4;
+    s += `<line x1="${L}" x2="${W - R}" y1="${Y(a)}" y2="${Y(a)}" style="stroke:var(--line)"/>` + T(L - 5, Y(a) + 3, f1(a, 2), "end") + T(X(b), H - 16, f1(b, 2));
+  }
+  s += T((L + W) / 2, H - 3, o.xl || "") + T(4, 10, o.yl || "", "start");
+  if (o.diag) s += `<line x1="${X(x0)}" y1="${Y(y0)}" x2="${X(x1)}" y2="${Y(y1)}" stroke-dasharray="4 3" style="stroke:var(--mut)"/>`;
+  ser.forEach((q) => {
+    s += `<polyline fill="none" stroke-width="2" style="stroke:var(${q.c})" points="${q.x.map((v, i) => X(v) + "," + Y(q.y[i])).join(" ")}"/>`;
+    if (q.x.length < 12) q.x.forEach((v, i) => s += `<circle cx="${X(v)}" cy="${Y(q.y[i])}" r="3" style="fill:var(${q.c})"/>`);
+    if (q.m) s += `<circle cx="${X(q.m[0])}" cy="${Y(q.m[1])}" r="6" fill="none" stroke-width="2" style="stroke:var(${q.c})"/>`;
+  });
+  $(id).innerHTML = s;
+  lg(id, ser);
+}
+const card = (t, id, n) => `<div class="panel"><h3>${t}</h3><div class="leg" id="${id}l"></div><svg id="${id}" viewBox="0 0 460 260"></svg><p class="note">${n || ""}</p></div>`;
+
+// ===== Navigasi tab dan kerangka halaman =====
+const TABS = [["ring", "📊 Ringkasan bisnis"], ["hari", "📅 Harian"], ["model", "⚖️ Perbandingan model"], ["kal", "🎯 Kalibrasi dan keputusan"], ["pola", "🌦️ Pola iklim"], ["uji", "🧪 Uji signifikansi"], ["adv", "🔬 Ablasi dan musim"]];
+$("tabs").innerHTML = TABS.map((t, i) => `<button role="tab" data-t="${t[0]}" aria-selected="${!i}">${t[1]}</button>`).join("");
+$("tabs").onclick = (e) => {
+  const b = e.target.closest("button");
+  if (!b) return;
+  document.querySelectorAll("#tabs button").forEach((x) => x.setAttribute("aria-selected", x === b));
+  TABS.forEach((t) => $("t-" + t[0]).classList.toggle("hide", t[0] !== b.dataset.t));
+  $("scrow").classList.toggle("hide", !["model", "kal"].includes(b.dataset.t));
+  render();
+};
+$("t-model").innerHTML = card("🎯 Pinball loss per skema (makin kecil makin baik)", "b1") + card("📏 MAE median per skema (&deg;C)", "b2") + card("🛡️ Cakupan interval, garis merah = target", "b3", "Dekat garis = interval jujur. Di atas = terlalu lebar.") + card("📊 Pinball per kuantil", "b4", "Menunjukkan model unggul di bagian sebaran yang mana.") + '<div class="panel" style="grid-column:1/-1"><h3>📋 Tabel metrik lengkap (tebal = terbaik)</h3><div style="overflow-x:auto" id="tb"></div></div>';
+$("t-kal").innerHTML = '<section class="panel"><label for="th">🚨 Ambang peluang untuk mengeluarkan peringatan: <b id="thv">50%</b></label><input type="range" id="th" min=".05" max=".95" step=".05" value=".5" style="width:100%"></section><div class="g2">' + card("⚖️ Diagram reliabilitas", "r1", "Di bawah garis putus-putus = peluang terlalu tinggi.") + card("📈 Kurva ROC (lingkaran = ambang saat ini)", "r2") + card("🎯 Presisi, recall, F1 pada ambang ini", "r3") + '<div class="panel"><h3>🧮 Matriks keputusan</h3><div style="overflow-x:auto" id="cmt"></div><p class="note">TP hari panas terdeteksi, FP alarm palsu, FN terlewat, TN benar aman.</p></div></div>';
+$("t-pola").innerHTML = '<div class="g2"><div class="panel" style="grid-column:1/-1"><h3>🗓️ Jumlah hari panas per bulan dan tahun</h3><div style="overflow-x:auto" id="hm"></div><p class="note">Strip kosong (-) = belum ada data. Warna makin pekat = makin banyak hari panas.</p></div>' + card("🔥 Persen hari panas per tahun", "p1", "2026* baru sampai September.") + card("💧 Rata-rata RH 13.00 per tahun (%)", "p2", "Kelembapan turun mengikuti turunnya hari panas, hipotesis perlu dicek literatur.") + card("🌡️ Rata-rata suhu terasa 13.00 (&deg;C)", "p3") + "</div>";
+
+// ===== Tab Ringkasan bisnis =====
+const ring = () => {
+  const ms = ML(), M = {};
+  ms.forEach((m) => M[m] = met(getR("G", m)));
+  const best = [...ms].sort((a, b2) => M[a].pin - M[b2].pin)[0], b = M[best], k = M.Klimatologi;
+  const KP = (i, l, v) => `<div class="kpi"><span class="ic">${i}</span><div><small>${l}</small><b>${v}</b></div></div>`;
+  let h = '<div class="kpis">' + KP("🏆", "Model terbaik", best) + KP("📏", "Rata-rata meleset (MAE)", f1(b.mae) + " °C") + KP("🛡️", "Cakupan interval 80%", f1(b.c80, 0) + "%") + KP("🎯", "AUC hari panas", f1(b.auc, 2)) + '</div><div class="qgrid">';
+  const IC = ["🏆", "📏", "🛡️", "☔", "⏰", "📆", "📈", "🧮", "🧩"];
+  let qi = 0;
+  const Q = (q, a) => h += `<div class="panel qa"><span class="ic">${IC[qi++ % IC.length]}</span><div><b>${q}</b><p>${a}</p></div></div>`;
+  Q("Model mana yang paling layak dipakai?", `${best} punya pinball rata-rata terendah (${f1(b.pin, 3)})` + (k && best !== "Klimatologi" ? `, turun ${f1((1 - b.pin / k.pin) * 100, 0)}% dibanding klimatologi.` : ".") + " Lihat tab Perbandingan model.");
+  Q("Seberapa meleset prediksi hari ini?", `Median ${best} rata-rata meleset ${f1(b.mae)} °C (RMSE ${f1(b.rmse)} °C)` + (k ? `, klimatologi ${f1(k.mae)} °C.` : "."));
+  Q("Apakah rentang ketidakpastian bisa dipercaya?", `Interval 80% menangkap ${f1(b.c80, 0)}% hari dan interval 90% ${f1(b.c90, 0)}%. ` + (b.c80 > 85 ? "Interval agak terlalu lebar (konservatif)." : b.c80 < 75 ? "Interval terlalu sempit, ekstrem sering lolos." : "Kalibrasi interval baik."));
+  Q("Apakah peluang hari panas andal?", `AUC ${f1(b.auc, 2)}. Rata-rata peluang prediksi ${f1(b.mp * 100, 0)}% vs kejadian nyata ${f1(b.or * 100, 0)}%. ` + (b.mp > b.or * 1.15 ? "Cenderung terlalu waspada (peluang terlalu tinggi)." : b.mp < b.or * 0.85 ? "Cenderung terlalu rendah." : "Selaras dengan kejadian."));
+  let bt = 0.5, bf = -1, bc;
+  for (let t = 0.05; t < 0.96; t += 0.05) {
+    const c = cm(getR("G", best), t);
+    if (c.f1 > bf) {
+      bf = c.f1;
+      bt = t;
+      bc = c;
+    }
+  }
+  Q("Pada peluang berapa peringatan sebaiknya keluar?", `Untuk ${best}, ambang sekitar ${f1(bt * 100, 0)}% memberi F1 tertinggi (${f1(bf, 2)}): ${f1(bc.rec * 100, 0)}% hari panas tertangkap, presisi ${f1(bc.pre * 100, 0)}%. Ambang lebih rendah menangkap lebih banyak tapi alarm palsu bertambah. Coba di tab Kalibrasi.`);
+  if (T4.length) {
+    const Y = yr(), mo = Array(12).fill(0);
+    T4.forEach((r) => mo[+r.t.slice(5, 7) - 1] += r.hot);
+    const top = mo.map((v, i) => [v, i]).sort((a, b2) => b2[0] - a[0]).slice(0, 3).map((x) => BL[x[1]]).join(", ");
+    Q("Kapan hari panas paling sering?", `Bulan dengan hari panas terbanyak sepanjang data: ${top}. Detail di heatmap tab Pola iklim.`);
+    Q("Apakah hari panas berubah antar tahun?", Y.map((y) => `${y.y}: ${f1(y.pc, 0)}%`).join(", ") + `. RH 13.00 rata-rata ${f1(Y[0].rh, 0)}% (${Y[0].y}) menjadi ${f1(Y[Y.length - 1].rh, 0)}% (${Y[Y.length - 1].y}). Tahun terakhir belum lengkap, jadi hati-hati membandingkan.`);
+  } else Q("Kapan hari panas paling sering dan apakah berubah?", "Muat data_tahap4.csv untuk menjawab.");
+  const sp = W8.selisih_pinball;
+  if (sp) {
+    const g = sp.filter((r) => r.Skema === "Gabungan");
+    Q("Apakah perbedaan antar model nyata secara statistik?", g.map((r) => `${r["Pasangan (a - b)"]}: selisih pinball ${r.Selisih} (${r["Beda nyata?"] === "ya" ? "nyata" : "tidak nyata"})`).join("; ") + ". Selang kepercayaan 95% dengan block bootstrap 14 hari. Lihat tab Uji signifikansi.");
+  }
+  const ab = W8.ablasi_ringkas;
+  if (ab) {
+    const g = (n) => {
+      const r = ab.find((z) => z.Model === n);
+      return r ? +r["Pinball Gabungan"] : NaN;
+    };
+    Q("Apakah fitur tambahan dan pengamatan 07.00 berguna?", `Pinball gabungan: Linear ${f1(g("Linear"), 3)}, Linear tanpa 07.00 ${f1(g("Linear tanpa 07.00"), 3)}, Linear sederhana ${f1(g("Linear sederhana"), 3)}, QRF ${f1(g("QRF"), 3)}, QRF tanpa 07.00 ${f1(g("QRF tanpa 07.00"), 3)}. Makin kecil makin baik. Detail dan selang kepercayaan di tab Ablasi dan musim.`);
+  }
+  $("t-ring").innerHTML = h + "</div>";
+};
+
+function yr() {
+  const g = {};
+  T4.forEach((r) => {
+    const y = r.t.slice(0, 4);
+    g[y] = g[y] || { y, n: 0, h: 0, rh: 0, hi: 0 };
+    g[y].n++;
+    g[y].h += r.hot;
+    g[y].rh += r.rh;
+    g[y].hi += r.hi;
+  });
+  return Object.values(g).map((o) => ({ y: o.y, pc: o.h / o.n * 100, rh: o.rh / o.n, hi: o.hi / o.n }));
+}
+
+// ===== Tab Perbandingan model =====
+function mdlTab() {
+  const sc = $("sc").value, ms = ML(), M = {};
+  ms.forEach((m) => M[m] = met(getR(sc, m)));
+  const ks = ["A", "B", "C"], cs = ["A (2024)", "B (2025)", "C (2026)"];
+  const sm = (f) => ms.map((m) => ({ n: m, c: CL[m], v: ks.map((s) => S[s][m] ? f(met(S[s][m])) : NaN) }));
+  bar("b1", cs, sm((x) => x.pin), { d: 3 });
+  bar("b2", cs, sm((x) => x.mae));
+  bar("b3", ["PICP 80%", "PICP 90%"], ms.map((m) => ({ n: m, c: CL[m], v: [M[m].c80, M[m].c90] })), { ref: [80, 90], d: 0 });
+  line("b4", ms.map((m) => {
+    const R = getR(sc, m);
+    return { n: m, c: CL[m], x: QI.map((i) => QL[i]), y: QI.map((i, j) => R.reduce((s, r) => {
+      const e = r.y - r.q[i], q = QL[i];
+      return s + Math.max(q * e, (q - 1) * e);
+    }, 0) / R.length) };
+  }), { xl: "kuantil", yl: "pinball" });
+  const k = M.Klimatologi;
+  ms.forEach((m) => M[m].bss = k ? 1 - M[m].br / k.br : NaN);
+  const cols = [["Pinball", "pin", 3, -1], ["MAE", "mae", 2, -1], ["RMSE", "rmse", 2, -1], ["PICP 80%", "c80", 0, 0], ["PICP 90%", "c90", 0, 0], ["Lebar 80%", "w80", 2, -1], ["Brier", "br", 3, -1], ["BSS", "bss", 2, 1], ["AUC", "auc", 2, 1]];
+  const bst = cols.map((c) => c[3] ? (c[3] < 0 ? Math.min : Math.max)(...ms.map((m) => M[m][c[1]])) : null);
+  $("tb").innerHTML = "<table><tr><th>Model</th>" + cols.map((c) => `<th>${c[0]}</th>`).join("") + "</tr>" + ms.map((m) => `<tr><td>${m}</td>` + cols.map((c, i) => {
+    const v = M[m][c[1]], b = bst[i] != null && v === bst[i];
+    return `<td>${b ? "<b>" : ""}${f1(v, c[2])}${b ? "</b>" : ""}</td>`;
+  }).join("") + "</tr>").join("") + "</table>";
+}
+
+// ===== Tab Pola iklim =====
+function polaTab() {
+  if (!T4.length) {
+    $("hm").innerHTML = "Muat data_tahap4.csv.";
+    ["p1", "p2", "p3"].forEach((i) => {
+      $(i).innerHTML = "";
+      $(i + "l").innerHTML = "";
+    });
+    return;
+  }
+  const c = {}, n = {};
+  T4.forEach((r) => {
+    const k = r.t.slice(0, 4) + r.t.slice(5, 7);
+    c[k] = (c[k] || 0) + r.hot;
+    n[k] = (n[k] || 0) + 1;
+  });
+  const Y = yr(), yrs = Y.map((o) => o.y), mx = Math.max(...Object.values(c), 1);
+  $("hm").innerHTML = '<table class="hm"><tr><th></th>' + yrs.map((y) => `<th>${y}</th>`).join("") + "</tr>" + BL.map((b, i) => `<tr><td>${b}</td>` + yrs.map((y) => {
+    const k = y + String(i + 1).padStart(2, "0");
+    return n[k] ? `<td style="background:color-mix(in srgb,var(--hot) ${Math.round(c[k] / mx * 85)}%,transparent)">${c[k]}</td>` : "<td>-</td>";
+  }).join("") + "</tr>").join("") + "</table>";
+  const cs = yrs.map((y) => y == yrs[yrs.length - 1] ? y + "*" : y);
+  bar("p1", cs, [{ n: "% hari panas", c: "--c2", v: Y.map((o) => o.pc) }], { d: 0 });
+  bar("p2", cs, [{ n: "RH", c: "--c1", v: Y.map((o) => o.rh) }], { d: 0 });
+  bar("p3", cs, [{ n: "Suhu terasa", c: "--hot", v: Y.map((o) => o.hi) }], { d: 1 });
+}
+
+// ===== Peluang hari panas, Klasifikasi RF, dan data t8 =====
+const PM = ["Klimatologi (bulanan)", "Klimatologi (laju terbaru)", "QRF", "Linear", "Klasifikasi RF"], PC = { "Klimatologi (bulanan)": "--c0", "Klimatologi (laju terbaru)": "--c3", QRF: "--c2", Linear: "--c1", "Klasifikasi RF": "--c4" }, P = { A: {}, B: {}, C: {} }, PF = {}, W8 = {};
+const getP = (s, m) => s === "G" ? ["A", "B", "C"].flatMap((k) => P[k][m] || []) : P[s][m] || [], PL = () => PM.filter((m) => getP("G", m).length), brier = (R) => R.reduce((s, r) => s + (r.p - r.hot) ** 2, 0) / R.length;
+
+function fillP(sc, m, R) {
+  if (PF[sc]) return;
+  P[sc][m === "Klimatologi" ? PM[0] : m] = R.map((r) => ({ t: r.t, hot: r.hot, p: r.p }));
+}
+
+function loadX(nm, rows, r0) {
+  const a = nm.match(/peluang_lipatan([ABC])/i);
+  if (a) {
+    const sc = a[1].toUpperCase();
+    PF[sc] = 1;
+    P[sc] = {};
+    PM.forEach((m) => {
+      if (m in r0) P[sc][m] = rows.map((r) => ({ t: r.Tanggal.slice(0, 10), hot: +r["Hari Panas"], p: +r[m] }));
+    });
+    return 1;
+  }
+  const k = nm.match(/t8_(\w+?)(?: \(\d+\))?\.csv/i);
+  if (k) {
+    W8[k[1]] = rows;
+    return 1;
+  }
+  return 0;
+}
+
+// ===== Tab Kalibrasi dan keputusan =====
+function kalTab() {
+  const sc = $("sc").value, ms = PL(), t = +$("th").value;
+  $("thv").textContent = Math.round(t * 100) + "%";
+  if (!$("ptb")) $("t-kal").insertAdjacentHTML("beforeend", '<div class="g2" style="margin-top:12px">' + card("🎲 Brier per skema (makin kecil makin baik)", "r4") + '<div class="panel"><h3>📋 Tabel peluang</h3><div style="overflow-x:auto" id="ptb"></div><p class="note">BSS positif = lebih baik dari pembanding klimatologi.</p></div></div>');
+  line("r1", ms.map((m) => ({ n: m, c: PC[m], ...rel(getP(sc, m)) })), { x: [0, 1], y: [0, 1], diag: 1, xl: "peluang prediksi", yl: "frekuensi nyata" });
+  line("r2", ms.map((m) => {
+    const R = getP(sc, m), x = [], y = [];
+    for (let k = 0; k <= 50; k++) {
+      const c2 = cm(R, k / 50);
+      x.push(c2.far);
+      y.push(c2.rec);
+    }
+    const c = cm(R, t);
+    return { n: m, c: PC[m], x, y, m: [c.far, c.rec] };
+  }), { x: [0, 1], y: [0, 1], diag: 1, xl: "alarm palsu (FPR)", yl: "recall" });
+  const C = {};
+  ms.forEach((m) => C[m] = cm(getP(sc, m), t));
+  bar("r3", ["Presisi", "Recall", "F1"], ms.map((m) => ({ n: m, c: PC[m], v: [C[m].pre, C[m].rec, C[m].f1] })));
+  $("cmt").innerHTML = "<table><tr><th>Model</th><th>TP</th><th>FP</th><th>FN</th><th>TN</th></tr>" + ms.map((m) => `<tr><td>${m}</td><td>${C[m].tp}</td><td>${C[m].fp}</td><td>${C[m].fn}</td><td>${C[m].tn}</td></tr>`).join("") + "</table>";
+  bar("r4", ["A", "B", "C", "Gab."], ms.map((m) => ({ n: m, c: PC[m], v: ["A", "B", "C", "G"].map((s) => {
+    const R = getP(s, m);
+    return R.length ? brier(R) : NaN;
+  }) })), { d: 3, nl: 1 });
+  const bu = ms.includes(PM[0]) ? brier(getP(sc, PM[0])) : NaN, lt = ms.includes(PM[1]) ? brier(getP(sc, PM[1])) : NaN;
+  $("ptb").innerHTML = "<table><tr><th>Model</th><th>Brier</th><th>BSS bulanan</th><th>BSS laju baru</th><th>AUC</th><th>Rata2 p</th><th>Nyata</th></tr>" + ms.map((m) => {
+    const R = getP(sc, m), b = brier(R), mp = R.reduce((s, r) => s + r.p, 0) / R.length, o = R.reduce((s, r) => s + r.hot, 0) / R.length;
+    return `<tr><td>${m}</td><td>${f1(b, 3)}</td><td>${f1(1 - b / bu, 3)}</td><td>${f1(1 - b / lt, 3)}</td><td>${f1(auc(R), 3)}</td><td>${f1(mp, 3)}</td><td>${f1(o, 3)}</td></tr>`;
+  }).join("") + "</table>";
+}
+
+// ===== Tab Uji signifikansi dan Ablasi =====
+function forest(rows) {
+  if (!rows || !rows.length) return '<p class="note">Muat berkas t8 terkait.</p>';
+  const v = rows.map((r) => ({ l: r["Pasangan (a - b)"] + " (" + r.Skema + ")", d: +r.Selisih, a: +r["CI 2.5%"], b: +r["CI 97.5%"], s: r["Beda nyata?"] === "ya" })), W = 620, rh = 22, H = v.length * rh + 40, L = 250, mn = Math.min(...v.map((x) => x.a), 0), mx = Math.max(...v.map((x) => x.b), 0), X = (z) => L + (z - mn) / (mx - mn || 1) * (W - L - 20);
+  let s = `<line x1="${X(0)}" x2="${X(0)}" y1="6" y2="${H - 26}" stroke-dasharray="4 3" style="stroke:var(--mut)"/>`;
+  v.forEach((x, i) => {
+    const y = 14 + i * rh, c = x.s ? "--hot" : "--mut";
+    s += T(L - 8, y + 3, x.l, "end") + `<line x1="${X(x.a)}" x2="${X(x.b)}" y1="${y}" y2="${y}" stroke-width="2" style="stroke:var(${c})"/><circle cx="${X(x.d)}" cy="${y}" r="3.5" style="fill:var(${c})"/>`;
+  });
+  s += T(X(mn), H - 8, f1(mn, 2), "start") + T(X(0), H - 8, "0") + T(X(mx), H - 8, f1(mx, 2), "end");
+  return `<svg viewBox="0 0 ${W} ${H}">${s}</svg>`;
+}
+
+function ujiTab() {
+  $("t-uji").innerHTML = [["Selisih pinball", "selisih_pinball"], ["Selisih Brier", "selisih_brier"]].map(([t, k]) => `<div class="panel"><h3>${t} dan selang kepercayaan 95%</h3>${forest(W8[k])}<p class="note">Selisih negatif = model pertama lebih baik. Merah = beda nyata (selang tidak melewati 0). Block bootstrap blok 14 hari.</p></div>`).join("");
+}
+
+function advTab() {
+  const a = W8.ablasi_ringkas;
+  const m = W8.musim_rawan;
+  const h = W8.hiperparameter;
+  if (!a && !m && !h) {
+    $("t-adv").innerHTML = '<div class="panel"><b>Data belum dimuat.</b><p class="note">Pastikan data_dashboard.js ada di folder yang sama dengan HTML ini.</p></div>';
+    return;
+  }
+  const KET_MODEL = "M1 klim. bulanan, M2 klim. laju terbaru, M3 linear sederhana, M4 linear tanpa 07.00, M5 linear, M6 QRF tanpa 07.00, M7 QRF.";
+  const KET_PINBALL = "Apakah fitur tambahan dan pengamatan 07.00 berguna. " + KET_MODEL + " M2 bertanda n/a karena klimatologi laju terbaru hanya menghasilkan peluang, bukan kuantil, sehingga pinball tidak terdefinisi. Lihat grafik Brier untuk M2.";
+  const KET_BRIER = "Urutan M1 sampai M7 sama seperti grafik pinball. Makin kecil makin baik.";
+  $("t-adv").innerHTML = '<div class="g2">' + card("🔬 Ablasi: pinball per model", "a1", KET_PINBALL) + card("🔬 Ablasi: Brier per model", "a2", KET_BRIER) + card("🍂 Pinball: musim rawan vs bulan lain", "a3", "Musim rawan = Mar-Mei dan Okt-Des.") + card("⚙️ Hiperparameter QRF (pinball validasi)", "a4", "Makin kecil makin baik.") + '</div><div class="panel"><h3>Ablasi: selisih pinball dan selang kepercayaan</h3>' + forest(W8.ablasi_pinball) + '</div><div class="panel"><h3>Ablasi: selisih Brier dan selang kepercayaan</h3>' + forest(W8.ablasi_brier) + "</div>";
+  if (a) {
+    const kodeModel = a.map((r, i) => "M" + (i + 1));
+    const skema = ["A", "B", "C", "Gabungan"];
+    const warna = ["--c0", "--c1", "--c2", "--c4"];
+    const angka = (v) => v === "" || v == null ? NaN : +v;
+    [["a1", "Pinball"], ["a2", "Brier"]].forEach(([id, metrik]) => {
+      const seri = skema.map((s, i) => ({
+        n: s,
+        c: warna[i],
+        v: a.map((r) => angka(r[metrik + " " + s]))
+      }));
+      bar(id, kodeModel, seri, { d: 2, nl: 1 });
+      const lebarKolom = (460 - 42 - 8) / kodeModel.length;
+      let tanda = "";
+      kodeModel.forEach((_, i) => {
+        if (seri.every((q) => isNaN(q.v[i]))) {
+          tanda += '<text x="' + (42 + i * lebarKolom + lebarKolom / 2) + '" y="222" text-anchor="middle" font-size="11" style="fill:var(--mut)">n/a</text>';
+        }
+      });
+      if (tanda) $(id).innerHTML += tanda;
+    });
+  }
+  if (m) {
+    const kelompok = [...new Set(m.map((r) => r.Kelompok))];
+    const model = [...new Set(m.map((r) => r.Model))];
+    bar("a3", kelompok, model.map((x) => ({
+      n: x,
+      c: CL[x],
+      v: kelompok.map((k) => {
+        const r = m.find((z) => z.Kelompok === k && z.Model === x);
+        return r ? +r.Pinball : NaN;
+      })
+    })), { d: 3 });
+  }
+  if (h) {
+    bar(
+      "a4",
+      h.map((r) => "L" + r.min_samples_leaf + "/" + r.max_features),
+      [{ n: "pinball", c: "--c2", v: h.map((r) => +r.pinball_validasi) }],
+      { d: 3 }
+    );
+  }
+}
+
+// ===== Render semua tab dan tab Harian =====
+$("sc").onchange = () => {
+  mdlTab();
+  kalTab();
+};
+$("th").oninput = kalTab;
+
+function render() {
+  ring();
+  mdlTab();
+  kalTab();
+  polaTab();
+  ujiTab();
+  advTab();
+  const p = $("mdl").value;
+  $("mdl").innerHTML = ML().map((m) => `<option>${m}</option>`).join("");
+  if (p && DM[p]) $("mdl").value = p;
+  seg(!cur);
+}
+
+function seg(reset) {
+  tl = Object.keys(DM[$("mdl").value]).sort();
+  const a = tl[0], b = tl[tl.length - 1];
+  $("tgl").min = a;
+  $("tgl").max = b;
+  $("rentang").textContent = "Prediksi tersedia: " + a + " s/d " + b + " (" + tl.length + " hari).";
+  if (reset || !cur || cur < a || cur > b) cur = b;
+  $("tgl").value = cur;
+  tampil();
+}
+
+function geser(k) {
+  let i = tl.indexOf(cur);
+  if (i < 0) i = tl.findIndex((t) => t >= cur);
+  cur = tl[Math.min(tl.length - 1, Math.max(0, i + k))];
+  $("tgl").value = cur;
+  tampil();
+}
+$("tgl").onchange = (e) => {
+  let v = e.target.value;
+  if (!v) return;
+  if (!tl.includes(v)) {
+    const j = tl.findIndex((t) => t >= v);
+    v = tl[j < 0 ? tl.length - 1 : j];
+  }
+  cur = v;
+  $("tgl").value = v;
+  tampil();
+};
+$("prev").onclick = () => geser(-1);
+$("next").onclick = () => geser(1);
+$("mdl").onchange = () => seg(false);
+$("win").onchange = tampil;
+
+function tampil() {
+  const r = DM[$("mdl").value][cur];
+  if (!r) return;
+  const q = r.q, med = q[3], e = r.y - med;
+  $("vA").textContent = f1(r.y) + " °C";
+  $("vP").textContent = f1(med) + " °C";
+  $("sAir").textContent = AIR[cur] != null ? f1(AIR[cur]) + " °C" : "(muat data_tahap4.csv)";
+  $("sErr").textContent = (e >= 0 ? "+" : "") + f1(e) + " °C";
+  $("s80").textContent = f1(q[1]) + " - " + f1(q[9]);
+  $("s90").textContent = f1(q[0]) + " - " + f1(q[10]);
+  $("sProb").textContent = f1(r.p * 100) + " %";
+  const bd = $("badge");
+  bd.textContent = r.hot ? "🔥 Hari panas" : "✅ Bukan hari panas";
+  bd.className = r.hot ? "hot" : "";
+  gambar();
+}
+
+function gambar() {
+  const m = $("mdl").value, w = +$("win").value, i = tl.indexOf(cur), a = Math.max(0, i - w), b = Math.min(tl.length - 1, i + w), ds = tl.slice(a, b + 1), R = ds.map((t) => DM[m][t]), W = 900, H = 360, L = 48, Rr = 14, T0 = 14, B = 30, n = ds.length;
+  let lo = Infinity, hi = -Infinity;
+  R.forEach((r) => {
+    lo = Math.min(lo, r.q[0], r.y);
+    hi = Math.max(hi, r.q[10], r.y);
+  });
+  lo = Math.floor(Math.min(lo, THR) - 1);
+  hi = Math.ceil(Math.max(hi, THR) + 1);
+  const X = (k) => L + (n < 2 ? 0 : k * (W - L - Rr) / (n - 1)), Y = (v) => T0 + (hi - v) * (H - T0 - B) / (hi - lo), poly = (l, h) => R.map((r, k) => X(k) + "," + Y(r.q[h])).concat(R.map((r, k) => X(k) + "," + Y(r.q[l])).reverse()).join(" ");
+  let s = "";
+  for (let v = Math.ceil(lo / 2) * 2; v <= hi; v += 2) s += `<line x1="${L}" x2="${W - Rr}" y1="${Y(v)}" y2="${Y(v)}" style="stroke:var(--line)"/>` + T(L - 6, Y(v) + 4, v, "end");
+  const st = Math.max(1, Math.round(n / 7));
+  ds.forEach((t, k) => {
+    if (k % st === 0) s += T(X(k), H - 10, t.slice(5));
+  });
+  s += `<polygon points="${poly(0, 10)}" opacity=".18" style="fill:var(--band)"/><polygon points="${poly(2, 6)}" opacity=".4" style="fill:var(--band)"/><polyline fill="none" stroke-width="2" style="stroke:var(--band)" points="${R.map((r, k) => X(k) + "," + Y(r.q[3])).join(" ")}"/><line x1="${L}" x2="${W - Rr}" y1="${Y(THR)}" y2="${Y(THR)}" stroke-dasharray="5 4" style="stroke:var(--hot)"/>`;
+  R.forEach((r, k) => s += `<circle cx="${X(k)}" cy="${Y(r.y)}" r="${r.hot ? 4 : 2.6}" style="fill:var(${r.hot ? "--hot" : "--ink"})"/>`);
+  const kc = ds.indexOf(cur);
+  if (kc >= 0) s += `<line x1="${X(kc)}" x2="${X(kc)}" y1="${T0}" y2="${H - B}" style="stroke:var(--ink)"/><circle cx="${X(kc)}" cy="${Y(R[kc].y)}" r="6" fill="none" stroke-width="2" style="stroke:var(--ink)"/>`;
+  const sv = $("grafik");
+  sv.innerHTML = s;
+  sv.onclick = (e) => {
+    const p = sv.getBoundingClientRect(), x = (e.clientX - p.left) * W / p.width, k = Math.round((x - L) * (n - 1) / (W - L - Rr));
+    if (k >= 0 && k < n) {
+      cur = ds[k];
+      $("tgl").value = cur;
+      tampil();
+    }
+  };
+}
+
+// ===== Muat otomatis dari data_dashboard.js =====
+if (window.DASHBOARD_DATA) muat(Object.entries(window.DASHBOARD_DATA).map(([nm, tx]) => ({ nm, tx })));
+else {
+  $("status").textContent = "⚠️ Data tidak ditemukan";
+  $("welcome").classList.remove("hide");
+}
+</script></main></body></html>
